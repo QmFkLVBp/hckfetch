@@ -175,7 +175,7 @@ done
 # ---------------------------------------------------------------------------
 echo
 echo -e "${GREEN}${BOLD}╔══════════════════════════════════════════════╗${RESET}"
-echo -e "${GREEN}${BOLD}║   hckfetch installed successfully!  🎉        ║${RESET}"
+echo -e "${GREEN}${BOLD}║   hckfetch installed successfully!  🎉       ║${RESET}"
 echo -e "${GREEN}${BOLD}╚══════════════════════════════════════════════╝${RESET}"
 echo
 echo -e " ${BOLD}Next steps:${RESET}"
