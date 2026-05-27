@@ -1,0 +1,89 @@
+#!/usr/bin/env bash
+# =============================================================================
+# hckfetch-wrap — universal logging wrapper for hckfetch tool tracking
+# =============================================================================
+#
+# USAGE:
+#   hckfetch-wrap <tool-name> [tool arguments...]
+#
+# This script is called transparently by the shell aliases installed by
+# install.sh.  It:
+#   1. Records the start timestamp (unix epoch) in a per-session log file.
+#   2. Executes the *real* binary (looked up with 'command -v' bypassing
+#      the alias, or via the HCKFETCH_REAL_<TOOL> env var if set).
+#   3. Records the end timestamp in the same log file.
+#
+# Log directory  : ~/.hckfetch_logs/<tool>/
+# Log file format: START <epoch>\nEND <epoch>\n
+#
+# =============================================================================
+
+set -euo pipefail
+
+LOG_DIR="${HOME}/.hckfetch_logs"
+
+# ---------------------------------------------------------------------------
+# Validate invocation
+# ---------------------------------------------------------------------------
+if [[ $# -lt 1 ]]; then
+    echo "Usage: hckfetch-wrap <tool> [args...]" >&2
+    exit 1
+fi
+
+TOOL_NAME="$1"
+shift   # remaining "$@" are the real tool's arguments
+
+# ---------------------------------------------------------------------------
+# Sanity-check the tool name (only allow alphanumeric, dash, underscore)
+# This prevents log directory traversal attacks.
+# ---------------------------------------------------------------------------
+if [[ ! "$TOOL_NAME" =~ ^[a-zA-Z0-9_-]+$ ]]; then
+    echo "hckfetch-wrap: invalid tool name '${TOOL_NAME}'" >&2
+    exit 1
+fi
+
+# ---------------------------------------------------------------------------
+# Find the real binary, avoiding the alias/function that called us.
+# The install script sets HCKFETCH_REAL_<TOOLNAME_UPPER> as a fallback.
+# ---------------------------------------------------------------------------
+TOOL_NAME_UPPER="${TOOL_NAME^^}"
+TOOL_NAME_SAFE="${TOOL_NAME_UPPER//-/_}"   # hyphens → underscores for env var
+ENV_VAR="HCKFETCH_REAL_${TOOL_NAME_SAFE}"
+
+REAL_BIN="${!ENV_VAR:-}"
+
+if [[ -z "$REAL_BIN" ]]; then
+    # Temporarily unset the alias / function so 'command -v' finds the real path
+    REAL_BIN="$(type -P "$TOOL_NAME" 2>/dev/null || true)"
+fi
+
+if [[ -z "$REAL_BIN" ]]; then
+    echo "hckfetch-wrap: '${TOOL_NAME}' not found in PATH" >&2
+    exit 127
+fi
+
+# ---------------------------------------------------------------------------
+# Prepare log file
+# ---------------------------------------------------------------------------
+TOOL_LOG_DIR="${LOG_DIR}/${TOOL_NAME}"
+mkdir -p "$TOOL_LOG_DIR"
+
+# One log file per session, named by start epoch
+START_TS="$(date +%s)"
+LOG_FILE="${TOOL_LOG_DIR}/${START_TS}.log"
+
+echo "START ${START_TS}" > "$LOG_FILE"
+
+# ---------------------------------------------------------------------------
+# Execute the real tool — pass all arguments through; preserve exit code
+# ---------------------------------------------------------------------------
+EXIT_CODE=0
+"$REAL_BIN" "$@" || EXIT_CODE=$?
+
+# ---------------------------------------------------------------------------
+# Record end timestamp
+# ---------------------------------------------------------------------------
+END_TS="$(date +%s)"
+echo "END ${END_TS}" >> "$LOG_FILE"
+
+exit "$EXIT_CODE"
