@@ -122,16 +122,23 @@ alias sqlmap='hckfetch-wrap sqlmap'
 
 ## 🛠️ Tracked Tools
 
-| Icon | Tool | Icon | Tool |
-|---|---|---|---|
-| 🔍 | nmap | 🔓 | hashcat |
-| 💀 | metasploit | 🌊 | wfuzz |
-| 🕷️ | burpsuite | ⚡ | ffuf |
-| 🗄️ | sqlmap | 🗺️ | crackmapexec |
-| 🐉 | hydra | 🐧 | enum4linux |
-| 🔑 | john | 🚀 | gobuster |
-| 📡 | aircrack-ng | 🕵️ | nikto |
+| Icon | Tool |
+|---|---|
+| 🔍 | nmap |
+| 💀 | metasploit |
+| 🕷️ | burpsuite |
+| 🗄️ | sqlmap |
+| 🐉 | hydra |
+| 🔑 | john |
+| 📡 | aircrack-ng |
 | 🦈 | wireshark |
+| 🔓 | hashcat |
+| 🌊 | wfuzz |
+| ⚡ | ffuf |
+| 🗺️ | crackmapexec |
+| 🐧 | enum4linux |
+| 🚀 | gobuster |
+| 🕵️ | nikto |
 
 You can extend tracked tools by editing `TOOLS` and `TOOL_ICONS` in `hckfetch`.
 
