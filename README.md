@@ -5,10 +5,9 @@
 </p>
 
 <p align="center">
-  <img alt="Bash" src="https://img.shields.io/badge/Bash-4.0%2B-121011?logo=gnu-bash">
-  <img alt="Platform" src="https://img.shields.io/badge/Platform-Linux-2ea44f?logo=linux">
-  <img alt="Status" src="https://img.shields.io/badge/Status-Active-1f6feb">
-  <img alt="Made for Kali" src="https://img.shields.io/badge/Made%20for-Kali-557C94">
+  <img alt="Shell: Bash 4.0+" src="https://img.shields.io/badge/Bash-4.0%2B-121011?logo=gnu-bash">
+  <img alt="Platform: Linux" src="https://img.shields.io/badge/Platform-Linux-2ea44f?logo=linux">
+  <img alt="Target distro: Kali Linux" src="https://img.shields.io/badge/Made%20for-Kali-557C94">
 </p>
 
 hckfetch gives you a clean dashboard of cumulative pentest tool statistics:
@@ -98,6 +97,8 @@ To disable automatic startup in new terminals:
 ```bash
 export HCKFETCH_SILENT=1
 ```
+
+Add the line to `~/.bashrc` or `~/.zshrc` for a persistent setting.
 
 ---
 
