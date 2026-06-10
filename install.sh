@@ -173,6 +173,7 @@ done
 # ---------------------------------------------------------------------------
 # Step 5: Summary
 # ---------------------------------------------------------------------------
+echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
 echo
 echo -e "${GREEN}${BOLD}╔══════════════════════════════════════════════╗${RESET}"
 echo -e "${GREEN}${BOLD}║   hckfetch installed successfully!  🎉       ║${RESET}"
