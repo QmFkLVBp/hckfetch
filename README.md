@@ -1,21 +1,45 @@
 # hckfetch 🍎💀
 
-> A neofetch-style pentesting activity tracker for hackers who want to gamify their terminal.
+<p align="center">
+  <strong>Neofetch-style pentesting activity tracker for your terminal.</strong>
+</p>
 
-hckfetch shows a colourful dashboard of cumulative tool-usage statistics (time spent, run count, last session) for common Kali Linux pentesting tools — automatically tracked via transparent shell wrappers.
+<p align="center">
+  <img alt="Bash" src="https://img.shields.io/badge/Bash-4%2B-121011?logo=gnu-bash">
+  <img alt="Platform" src="https://img.shields.io/badge/Platform-Linux-2ea44f?logo=linux">
+  <img alt="Status" src="https://img.shields.io/badge/Status-Active-1f6feb">
+  <img alt="Made for Kali" src="https://img.shields.io/badge/Made%20for-Kali-557C94">
+</p>
+
+hckfetch gives you a clean dashboard of cumulative pentest tool statistics:
+
+- total time spent per tool
+- execution count (runs)
+- last session timestamp
+
+Tracking is automatic via transparent command wrappers.
 
 ---
 
-## Screenshot
+## ✨ Highlights
 
-```
+- **Neofetch-like terminal UI**
+- **Automatic usage tracking** with no manual logging
+- **Per-tool analytics** (time, runs, last session)
+- **Easy install/uninstall scripts**
+- **Lightweight** (pure Bash, no heavy dependencies)
+
+---
+
+## 📸 Example Output
+
+```text
          (
           )
      __..---..__
  ,-='  /  |  \  `=-.
 :--..___________..--;
  \.,_____________,./
-
 
 ╔══════════════════════════════════════════════════╗
 ║  hckfetch v1.0.0 — pentest activity tracker      ║
@@ -42,7 +66,7 @@ hckfetch shows a colourful dashboard of cumulative tool-usage statistics (time s
 
 ---
 
-## Installation
+## 🚀 Installation
 
 ```bash
 git clone https://github.com/QmFkLVBp/hckfetch
@@ -52,47 +76,51 @@ chmod +x install.sh
 source ~/.bashrc   # or source ~/.zshrc
 ```
 
-The installer:
-1. Copies `hckfetch` and `hckfetch-wrap` to `~/.local/bin/` (or `/usr/local/bin/` as root).
-2. Creates `~/.hckfetch_logs/` to store per-session log files.
-3. Appends tool-tracking **aliases** to your `~/.bashrc` / `~/.zshrc`.
-4. Adds an **auto-launch** line so the dashboard appears on every new terminal.
+Installer actions:
+1. Copies `hckfetch` and `hckfetch-wrap` to `~/.local/bin/` (or `/usr/local/bin/` when run as root)
+2. Creates `~/.hckfetch_logs/` for session logs
+3. Appends tracking aliases to your shell config (`~/.bashrc` / `~/.zshrc`)
+4. Adds auto-launch so the dashboard appears in new terminals
 
 ---
 
-## Usage
+## 🧪 Usage
 
 | Command | Description |
 |---|---|
-| `hckfetch` | Display the full dashboard (logo + stats) |
-| `hckfetch --no-logo` | Display stats only (no ASCII art) |
-| `hckfetch --reset` | Wipe all usage logs and start fresh |
+| `hckfetch` | Show full dashboard (logo + stats) |
+| `hckfetch --no-logo` | Show stats only |
+| `hckfetch --reset` | Clear all usage logs |
 | `hckfetch --help` | Show help |
 
-Set `HCKFETCH_SILENT=1` in your environment to suppress the auto-launch on terminal open.
-
----
-
-## How Tracking Works
-
-`hckfetch-wrap` is a thin wrapper that:
-1. Records a **start timestamp** (unix epoch) to `~/.hckfetch_logs/<tool>/<timestamp>.log`.
-2. Executes the **real binary** with all original arguments.
-3. Records an **end timestamp** to the same file.
-
-`hckfetch` reads every `.log` file, sums the durations, and displays the result.
-
-The aliases installed look like:
+To disable automatic startup in new terminals:
 
 ```bash
-alias nmap='hckfetch-wrap nmap'
-alias sqlmap='hckfetch-wrap sqlmap'
-# ... etc.
+export HCKFETCH_SILENT=1
 ```
 
 ---
 
-## Tracked Tools
+## ⚙️ How Tracking Works
+
+`hckfetch-wrap`:
+1. Writes a **start timestamp** to `~/.hckfetch_logs/<tool>/<timestamp>.log`
+2. Runs the real tool command with all original arguments
+3. Writes an **end timestamp** to the same log file
+
+`hckfetch` then reads all `.log` files and aggregates totals.
+
+Installed aliases look like:
+
+```bash
+alias nmap='hckfetch-wrap nmap'
+alias sqlmap='hckfetch-wrap sqlmap'
+# ...
+```
+
+---
+
+## 🛠️ Tracked Tools
 
 | Icon | Tool | Icon | Tool |
 |---|---|---|---|
@@ -103,13 +131,13 @@ alias sqlmap='hckfetch-wrap sqlmap'
 | 🐉 | hydra | 🐧 | enum4linux |
 | 🔑 | john | 🚀 | gobuster |
 | 📡 | aircrack-ng | 🕵️ | nikto |
-| 🦈 | wireshark | | |
+| 🦈 | wireshark |  |  |
 
-Edit the `TOOLS` and `TOOL_ICONS` arrays in `hckfetch` to add your own.
+You can extend tracked tools by editing `TOOLS` and `TOOL_ICONS` in `hckfetch`.
 
 ---
 
-## Uninstallation
+## 🧹 Uninstallation
 
 ```bash
 ./uninstall.sh           # interactive (asks whether to delete logs)
@@ -118,20 +146,20 @@ Edit the `TOOLS` and `TOOL_ICONS` arrays in `hckfetch` to add your own.
 
 ---
 
-## Requirements
+## 📦 Requirements
 
 - Bash 4+
 - Standard Unix tools: `date`, `awk`, `find`, `mkdir`
-- Optional: `lsb_release` for distro detection
-- No heavy dependencies — works on Kali Linux and any Debian-based distro
+- Optional: `lsb_release` (for distro detection)
+- Designed for Kali Linux and compatible with Debian-based distros
 
 ---
 
-## Files
+## 📁 Project Files
 
 | File | Description |
 |---|---|
 | `hckfetch` | Main dashboard script |
-| `hckfetch-wrap` | Transparent logging wrapper |
-| `install.sh` | Installation script |
-| `uninstall.sh` | Uninstallation script |
+| `hckfetch-wrap` | Usage logging wrapper |
+| `install.sh` | Installer |
+| `uninstall.sh` | Uninstaller |
