@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-  <img alt="Bash" src="https://img.shields.io/badge/Bash-4%2B-121011?logo=gnu-bash">
+  <img alt="Bash" src="https://img.shields.io/badge/Bash-4.0%2B-121011?logo=gnu-bash">
   <img alt="Platform" src="https://img.shields.io/badge/Platform-Linux-2ea44f?logo=linux">
   <img alt="Status" src="https://img.shields.io/badge/Status-Active-1f6feb">
   <img alt="Made for Kali" src="https://img.shields.io/badge/Made%20for-Kali-557C94">
@@ -131,7 +131,7 @@ alias sqlmap='hckfetch-wrap sqlmap'
 | 🐉 | hydra | 🐧 | enum4linux |
 | 🔑 | john | 🚀 | gobuster |
 | 📡 | aircrack-ng | 🕵️ | nikto |
-| 🦈 | wireshark |  |  |
+| 🦈 | wireshark |
 
 You can extend tracked tools by editing `TOOLS` and `TOOL_ICONS` in `hckfetch`.
 
