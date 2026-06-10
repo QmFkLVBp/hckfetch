@@ -105,7 +105,7 @@ Add the line to `~/.bashrc` or `~/.zshrc` for a persistent setting.
 ## ⚙️ How Tracking Works
 
 `hckfetch-wrap`:
-1. Writes a **start timestamp** to `~/.hckfetch_logs/<tool>/<timestamp>.log`
+1. Captures a start-time unix epoch and uses it as the log filename: `~/.hckfetch_logs/<tool>/<start_epoch>.log`
 2. Runs the real tool command with all original arguments
 3. Writes an **end timestamp** to the same log file
 
