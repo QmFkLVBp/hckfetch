@@ -105,11 +105,11 @@ Add the line to `~/.bashrc` or `~/.zshrc` for a persistent setting.
 ## ⚙️ How Tracking Works
 
 `hckfetch-wrap`:
-1. Captures a start-time unix epoch and uses it as the log filename: `~/.hckfetch_logs/<tool>/<start_epoch>.log`
+1. Captures a start timestamp (unix epoch) and uses it as the log filename: `~/.hckfetch_logs/<tool>/<timestamp>.log`
 2. Runs the real tool command with all original arguments
 3. Writes an **end timestamp** to the same log file
 
-`hckfetch` then reads all `.log` files and aggregates totals.
+`hckfetch` then reads all `.log` files, sums durations, and displays aggregated totals.
 
 Installed aliases look like:
 
