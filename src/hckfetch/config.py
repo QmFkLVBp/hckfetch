@@ -31,37 +31,22 @@ LEVELS = [
 ]
 
 def ensure_config():
-    """Створити конфіг за замовчуванням, якщо відсутній."""
+    """Створити конфіг за замовчуванням, якщо відсутній. LOGO_FILE не створюється."""
     CONFIG_DIR.mkdir(parents=True, exist_ok=True)
-    (CONFIG_DIR / "logs").mkdir(exist_ok=True)  # для історії (якщо використовуємо файли)
     DB_FILE.parent.mkdir(parents=True, exist_ok=True)
 
     if not CONFIG_FILE.exists():
         default_config = {
             "tools": DEFAULT_TOOLS,
             "levels": [{"hours": h, "name": n} for h, n in LEVELS],
-            "logo_file": str(LOGO_FILE) if LOGO_FILE.exists() else None,
-            "use_random_logo": True,   # якщо logo_file не задано, брати випадковий вбудований
+            "logo_file": str(LOGO_FILE),  # шлях, але файл може не існувати
+            "use_random_logo": False,     # не використовуємо вбудовані
             "color_scheme": "default"
         }
         with open(CONFIG_FILE, 'w') as f:
             yaml.safe_dump(default_config, f, default_flow_style=False)
 
-    if not LOGO_FILE.exists():
-        # Записуємо дефолтний арт
-        default_logo = r"""
-    ⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀
-
-──▄────▄▄▄▄▄▄▄────▄───
-─▀▀▄─▄█████████▄─▄▀▀──
-─────██─▀███▀─██──────
-───▄─▀████▀████▀─▄────
-─▀█────██▀█▀██────█▀──
-
-
-    """
-        with open(LOGO_FILE, 'w') as f:
-            f.write(default_logo.strip())
+    # logo.txt НЕ створюємо — користувач сам його додасть, якщо захоче
 
 def load_config() -> dict:
     ensure_config()
@@ -80,8 +65,9 @@ def get_levels() -> List[tuple]:
     return LEVELS
 
 def get_logo_path() -> Path:
+    """Повертає шлях до файлу з ASCII-артом, навіть якщо він не існує."""
     cfg = load_config()
     logo_path = cfg.get("logo_file")
-    if logo_path and Path(logo_path).exists():
+    if logo_path:
         return Path(logo_path)
-    return LOGO_FILE
+    return LOGO_FILE  # за замовчуванням
